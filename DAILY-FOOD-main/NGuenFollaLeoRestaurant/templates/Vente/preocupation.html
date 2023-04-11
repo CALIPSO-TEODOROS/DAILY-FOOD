@@ -1,0 +1,116 @@
+{% extends 'crud/base.html' %}
+{% block bodys %}
+<div class="container-fluid">
+    <h3 class="m-4">All préoccupation</h3>
+    <div class="row">
+        <div class="col-12">
+            {% if crud %}
+            <div class="card bg-light ms-4 me-4 mb-4">
+                <div class="card-header">
+                    <i class="fa-solid fa-list" fa-lg></i>préoccupation Records</a>  
+                </div>
+                <div class="card-body">
+                   <p class="card-text">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">name</th>
+                                <th scope="col">email</th>
+                                <th scope="col">phone</th>
+                                <th scope="col">suject</th>
+                                <th scope="col">description</th>
+                                {% comment %} <th scope="col">Actions</th> {% endcomment %}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for chaussure in crud %}
+                                <tr>
+                                    <td>{{ chaussure.name2 }}</td>
+                                    <td>{{ chaussure.email2 }}</td>
+                                    <td>{{ chaussure.phone2 }}</td>
+                                    <td>{{ chaussure.suject2 }}</td>
+                                    <td>{{ chaussure.description2 }}</td> 
+                                    <td>
+                                        {% comment %} <button type="button" class="btn btn-succes me-1" href="{% url 'view_chaussure' chaussure.id %}" 
+                                        data-bs-toggle="modal" data-bs-target="#myModal{{chaussure.id}}">
+                                        <i class="fa-solid fa-circle-info fa-lg"></i>
+                                        </button> {% endcomment %}
+
+                                        <!-- Model - View Chaussure -->
+                                        <div class="modal" id = "myModal{{chaussure.id}}" tabindex = "-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title">
+                                                    Chaussure: {{ chaussure.email2 }} {{ chaussure.suject2 }}
+                                                  </h5>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true"></span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                  <ul class="list-unstyled">
+                                                    <li>name: <strong>{{ chaussure.name2 }}</strong></li>
+                                                    <li>email: <strong>{{ chaussure.email2 }}</strong></li>
+                                                    <li>phone: <strong>{{ chaussure.phone2 }}</strong></li>
+                                                    <li>suject: <strong>{{ chaussure.suject2 }}</strong></li>
+                                                    <li>description: <strong>{{ chaussure.description2 }}</strong></li>
+                                                  </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                      {% comment %} <a class="btn btn-warning me-1" href="{% url 'edit' chaussure.id %}">
+                                        <i class="fa-solid fa-pen-to-square fa-lg "></i>
+                                      </a>  {% endcomment %}
+                                      {% comment %} <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{chaussure.id}}">
+                                        <i class="fa-solid fa-trash fa-lg"></i>
+                                      </button> {% endcomment %}
+
+                                      <!--Modal- Delete Chaussure -->
+                                      <div class="modal" id = "delete{{chaussure.id}}" tabindex = "-1" aria-labelledby="myModalLabel2" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title">
+                                                préoccupation: {{ chaussure.email2 }} {{ chaussure.suject2 }}
+                                              </h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true"></span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                             <P>Are you sure you want to delete this préoccupation?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <form action="{% url 'delete' chaussure.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <input type="submit" class="btn btn-primary" value="Delete">
+                                              </form>
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>
+                                </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                    </div>
+                   </p>
+                </div>
+              </div>
+            {% else %}
+                <h5 class="alert alert-primary ms-4 me-4">No préoccupation Records</h5>
+            {% endif %}              
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"> </script>
+  
+{% endblock %}
